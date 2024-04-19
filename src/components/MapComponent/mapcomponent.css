@@ -1,0 +1,43 @@
+.map-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+  
+  .openModal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
+    background-color: teal;
+  }
+  
+  .pauseResume {
+    position: absolute;
+    top: 20px;
+    right: 130px;
+    z-index: 1;
+    background-color: tomato;
+  }
+  
+  button {
+    cursor: pointer;
+    padding: 7px 16px;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    border-radius: 5px;
+  }
+  
+  .map-wrapper,
+  #map {
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  .drone-marker {
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+  }
+  

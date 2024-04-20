@@ -4,6 +4,7 @@ import "./mapcomponent.css";
 import mapboxgl from "mapbox-gl";
 import { point, distance, along, lineString } from "@turf/turf";
 import "mapbox-gl/dist/mapbox-gl.css";
+import FormComponent from '../FormComponent/FormComponent';
 
 mapboxgl.accessToken =
     "pk.eyJ1IjoiYS1yYXRyZSIsImEiOiJjbDlyeDFpaXcwc2ltM3BvOWswaDAyMnRnIn0.-X7h5K9lok_Z4Hn8TXgSVA";
@@ -265,7 +266,13 @@ const MapComponent = () => {
                 Simulate
             </button>
             <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
-                <div>Hello Modal</div>
+            <button onClick={closeModal}>close</button>
+                <FormComponent
+                    formData={formData}
+                    handleFormChange={handleFormChange}
+                    handleSubmit={handleSubmit}
+                    error={error}
+                />
             </Modal>
             <div className="map-wrapper">
                 <div id="map" style={{ height: "100vh" }}></div>

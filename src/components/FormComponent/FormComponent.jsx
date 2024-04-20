@@ -1,5 +1,5 @@
 import React from "react";
-import "./FormComponent.css";
+import "./formcomponent.css";
 
 const FormComponent = ({ formData, handleFormChange, handleSubmit, error }) => {
   const {

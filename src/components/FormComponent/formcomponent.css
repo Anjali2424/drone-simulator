@@ -1,0 +1,39 @@
+.form-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  form {
+    width: 80%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    /* background-color: turquoise; */
+  }
+  
+  .form-field {
+    /* background: teal; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .form-field input {
+    padding: 10px;
+  }
+  
+  .simulate {
+    background-color: tomato;
+    width: 50%;
+  }
+  
+  .error-msg {
+    color: red;
+  }
+  

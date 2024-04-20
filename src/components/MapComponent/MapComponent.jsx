@@ -62,113 +62,113 @@ const MapComponent = () => {
         }
     }, [droneMarker, map, formData.startLongitude, formData.startLatitude]);
 
-    // const createLine = () => {
-    //     // Remove existing line if it exists
-    //     if (line) {
-    //         map.removeLayer("line");
-    //         map.removeSource("line");
-    //         map.removeLayer("trajectory");
-    //         map.removeSource("trajectory");
-    //         setLine(null);
-    //     }
+    const createLine = () => {
+        // Remove existing line if it exists
+        if (line) {
+            map.removeLayer("line");
+            map.removeSource("line");
+            map.removeLayer("trajectory");
+            map.removeSource("trajectory");
+            setLine(null);
+        }
 
-    //     // Remove existing drone marker if it exists
-    //     if (droneMarker) {
-    //         droneMarker.remove();
-    //         setDroneMarker(null);
-    //     }
+        // Remove existing drone marker if it exists
+        if (droneMarker) {
+            droneMarker.remove();
+            setDroneMarker(null);
+        }
 
-    //     // Create a line feature between the starting and destination points
-    //     const lineCoordinates = [
-    //         [formData.startLongitude, formData.startLatitude],
-    //         [formData.destLongitude, formData.destLatitude]
-    //     ];
+        // Create a line feature between the starting and destination points
+        const lineCoordinates = [
+            [formData.startLongitude, formData.startLatitude],
+            [formData.destLongitude, formData.destLatitude]
+        ];
 
-    //     const lineFeature = lineString(lineCoordinates);
+        const lineFeature = lineString(lineCoordinates);
 
-    //     map.addSource("line", {
-    //         type: "geojson",
-    //         data: lineFeature
-    //     });
+        map.addSource("line", {
+            type: "geojson",
+            data: lineFeature
+        });
 
-    //     map.addLayer({
-    //         id: "line",
-    //         type: "line",
-    //         source: "line",
-    //         paint: {
-    //             "line-color": "grey",
-    //             "line-width": 2
-    //         }
-    //     });
+        map.addLayer({
+            id: "line",
+            type: "line",
+            source: "line",
+            paint: {
+                "line-color": "grey",
+                "line-width": 2
+            }
+        });
 
-    //     setLine(lineFeature);
+        setLine(lineFeature);
 
-    //     const startCoord = point([formData.startLatitude, formData.startLongitude]);
-    //     const destCoord = point([formData.destLatitude, formData.destLongitude]);
-    //     const totalDistance = distance(startCoord, destCoord, {
-    //         units: "kilometers"
-    //     });
+        const startCoord = point([formData.startLatitude, formData.startLongitude]);
+        const destCoord = point([formData.destLatitude, formData.destLongitude]);
+        const totalDistance = distance(startCoord, destCoord, {
+            units: "kilometers"
+        });
 
-    //     const duration = formData.time * 1000; // Convert time to milliseconds
-    //     const steps = 100; // Number of steps for animation
-    //     const stepDistance = totalDistance / steps;
-    //     const stepDuration = duration / steps;
-    //     let currentStep = 0;
+        const duration = formData.time * 1000; // Convert time to milliseconds
+        const steps = 100; // Number of steps for animation
+        const stepDistance = totalDistance / steps;
+        const stepDuration = duration / steps;
+        let currentStep = 0;
 
-    //     // Add the drone marker at the start position
-    //     const newDroneMarker = new mapboxgl.Marker({
-    //         element: createDroneElement()
-    //     })
-    //         .setLngLat([formData.startLongitude, formData.startLatitude])
-    //         .addTo(map);
-    //     setDroneMarker(newDroneMarker);
+        // Add the drone marker at the start position
+        const newDroneMarker = new mapboxgl.Marker({
+            element: createDroneElement()
+        })
+            .setLngLat([formData.startLongitude, formData.startLatitude])
+            .addTo(map);
+        setDroneMarker(newDroneMarker);
 
-    //     // Create an empty trajectory line source
-    //     map.addSource("trajectory", {
-    //         type: "geojson",
-    //         data: {
-    //             type: "Feature",
-    //             geometry: {
-    //                 type: "LineString",
-    //                 coordinates: []
-    //             }
-    //         }
-    //     });
+        // Create an empty trajectory line source
+        map.addSource("trajectory", {
+            type: "geojson",
+            data: {
+                type: "Feature",
+                geometry: {
+                    type: "LineString",
+                    coordinates: []
+                }
+            }
+        });
 
-    //     // Create the trajectory line layer
-    //     map.addLayer({
-    //         id: "trajectory",
-    //         type: "line",
-    //         source: "trajectory",
-    //         paint: {
-    //             "line-color": "blue",
-    //             "line-width": 2,
-    //             "line-dasharray": [2, 2]
-    //         }
-    //     });
+        // Create the trajectory line layer
+        map.addLayer({
+            id: "trajectory",
+            type: "line",
+            source: "trajectory",
+            paint: {
+                "line-color": "blue",
+                "line-width": 2,
+                "line-dasharray": [2, 2]
+            }
+        });
 
-    //     const animateMarker = () => {
-    //         const currentPosition = along(lineFeature, currentStep * stepDistance, {
-    //             units: "kilometers"
-    //         });
+        const animateMarker = () => {
+            const currentPosition = along(lineFeature, currentStep * stepDistance, {
+                units: "kilometers"
+            });
 
-    //         newDroneMarker.setLngLat(currentPosition.geometry.coordinates);
+            newDroneMarker.setLngLat(currentPosition.geometry.coordinates);
 
-    //         // Add the current position to the trajectory line source
-    //         const trajectorySource = map.getSource("trajectory");
-    //         const trajectoryCoordinates = trajectorySource._data.geometry.coordinates;
-    //         trajectoryCoordinates.push(currentPosition.geometry.coordinates);
-    //         trajectorySource.setData(trajectorySource._data);
+            // Add the current position to the trajectory line source
+            const trajectorySource = map.getSource("trajectory");
+            const trajectoryCoordinates = trajectorySource._data.geometry.coordinates;
+            trajectoryCoordinates.push(currentPosition.geometry.coordinates);
+            trajectorySource.setData(trajectorySource._data);
 
-    //         currentStep++;
+            currentStep++;
 
-    //         if (currentStep <= steps) {
-    //             setTimeout(animateMarker, stepDuration);
-    //         }
-    //     };
+            if (currentStep <= steps) {
+                setTimeout(animateMarker, stepDuration);
+            }
+        };
 
-    //     animateMarker();
-    // };
+        animateMarker();
+    };
     // form data
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -236,7 +236,7 @@ const MapComponent = () => {
             setStartMarker(newStartMarker);
             setDestMarker(newDestMarker);
 
-            // createLine();
+            createLine();
         }
 
         setFormData(initialFormData);
